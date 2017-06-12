@@ -36,8 +36,13 @@ const Button = (props) => {
     	break;
   }
 	return (
-  	<div className="col-2">
+  	<div className="col-2 text-center">
       {button}
+      <br/><br/>
+      <button className="btn btn-warning btn-sm" onClick={props.redraw}
+              disabled={props.redraws === 0}>
+        <i className="fa fa-refresh"></i> {props.redraws}
+      </button>
     </div>
   )
 }
@@ -77,11 +82,13 @@ const Numbers = (props) => {
 Numbers.list = _.range(1, 10);
 
 class Game extends React.Component {
+	static randomNumber = () => 1 + Math.floor(Math.random()*9);
 	state = {
   	selectedNumbers: [],
-		randomNumberOfStars: 1 + Math.floor(Math.random()*9),
+		randomNumberOfStars: Game.randomNumber(),
     usedNumbers: [],
     answerIsCorrect: null,
+    redraws: 5,
   }
   selectNumber = (clickedNumber) => {
     if (this.state.selectedNumbers.includes(clickedNumber) !== false) { return; }
@@ -107,15 +114,26 @@ class Game extends React.Component {
     	usedNumbers: prevState.usedNumbers.concat(prevState.selectedNumbers),
       selectedNumbers: [],
       answerIsCorrect: null,
-			randomNumberOfStars: 1 + Math.floor(Math.random()*9),
+			randomNumberOfStars: Game.randomNumber(),
  	  }))
   }
+  redraw = () => {
+  	if (this.state.redraws === 0) return;
+    this.setState(prevState => ({
+			randomNumberOfStars: Game.randomNumber(),
+      answerIsCorrect: null,
+      selectedNumbers: [],
+      redraws: prevState.redraws - 1
+ 	  }))
+  }
+  
 	render() {
   	const {
       selectedNumbers, 
       randomNumberOfStars, 
       answerIsCorrect,
       usedNumbers,
+      redraws,
     } = this.state;
     
   	return (
@@ -126,8 +144,10 @@ class Game extends React.Component {
           <Stars numberOfStars={randomNumberOfStars} />
           <Button selectedNumbers={selectedNumbers}  
                   checkAnswer={this.checkAnswer}
+                  redraw={this.redraw}
                   acceptAnswer={this.acceptAnswer}
-                  answerIsCorrect={answerIsCorrect} />
+                  answerIsCorrect={answerIsCorrect} 
+                  redraws={redraws}/>
           <Answer 
             selectedNumbers={selectedNumbers} 
             rollbackNumber={this.rollbackNumber} 
