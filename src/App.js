@@ -14,6 +14,8 @@ const Stars = (props) => {
 
 const Button = (props) => {
 	let button;
+
+  // Switch between default, right and wrong states of the button
   switch(props.answerIsCorrect) {
   	case true:
       button = 
@@ -36,6 +38,7 @@ const Button = (props) => {
         </button>
     	break;
   }
+
 	return (
   	<div className="col-2 text-center">
       {button}
@@ -91,6 +94,8 @@ const Numbers = (props) => {
   );
 };
 
+// Generate and store an array into the Numbers function object, 
+// so it won't be generated every time the function is refreshed
 Numbers.list = range(1, 10);
 
 class Game extends React.Component {
@@ -106,7 +111,7 @@ class Game extends React.Component {
 	state = Game.initialState();
     
   resetGame = () => this.setState(Game.initialState());
-  
+
   selectNumber = (clickedNumber) => {
     if (this.state.selectedNumbers.includes(clickedNumber) !== false) { return; }
     this.setState(prevState => ({
@@ -114,18 +119,21 @@ class Game extends React.Component {
       selectedNumbers: prevState.selectedNumbers.concat(clickedNumber)
     }))
   }
+
   rollbackNumber = (clickedNumber) => {
   	this.setState(prevState => ({
    	  answerIsCorrect: null,
     	selectedNumbers: prevState.selectedNumbers.filter(n => n !== clickedNumber)
     }))
   }
+
   checkAnswer = ()  => {
   	this.setState(prevState => ({
     	answerIsCorrect: prevState.randomNumberOfStars ===
       	prevState.selectedNumbers.reduce((acc, curr) => acc + curr, 0)
     }))
   }
+
   acceptAnswer = () => {
     this.setState(prevState => ({
     	usedNumbers: prevState.usedNumbers.concat(prevState.selectedNumbers),
@@ -134,6 +142,7 @@ class Game extends React.Component {
 			randomNumberOfStars: Game.randomNumber(),
  	  }), this.updateDoneStatus)
   }
+
   redraw = () => {
   	if (this.state.redraws === 0) return;
     this.setState(prevState => ({
