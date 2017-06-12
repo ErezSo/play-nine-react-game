@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
+import range from 'lodash.range';
 import './App.css';
 
 const Stars = (props) => {
 	return (
   	<div className="col-5">
-      {_.range(props.numberOfStars).map(i => 
+      {range(props.numberOfStars).map(i => 
       	<i key={i} className="fa fa-star"></i>
       )}
     </div>
@@ -90,7 +91,7 @@ const Numbers = (props) => {
   );
 };
 
-Numbers.list = _.range(1, 10);
+Numbers.list = range(1, 10);
 
 class Game extends React.Component {
 	static randomNumber = () => 1 + Math.floor(Math.random()*9);
@@ -144,7 +145,7 @@ class Game extends React.Component {
   }
   
   possibleSolutions = ({randomNumberOfStars, usedNumbers}) => {
-    const possibleNumbers = _.range(1, 10).filter(number =>
+    const possibleNumbers = range(1, 10).filter(number =>
       usedNumbers.indexOf(number) === -1
     );
 
