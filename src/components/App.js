@@ -1,6 +1,5 @@
 import React from 'react';
-import range from 'lodash.range';
-import Game from 'Game';
+import Game from './Game';
 
 class App extends React.Component {
 	render() {

@@ -1,3 +1,6 @@
+import React from 'react';
+import range from 'lodash.range';
+
 const Numbers = (props) => { 
 	const numberClassName = (number) => {
   	if (props.usedNumbers.includes(number)) 		{ return 'used' }

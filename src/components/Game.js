@@ -1,8 +1,10 @@
-import Stars from 'Stars';
-import DoneFrame from 'DoneFrame';
-import Button from 'Button';
-import Numbers from 'Numbers';
-import Answer from 'Answer';
+import React from 'react';
+import range from 'lodash.range';
+import Stars from './Stars';
+import DoneFrame from './DoneFrame';
+import Button from './Button';
+import Numbers from './Numbers';
+import Answer from './Answer';
 
 
 class Game extends React.Component {

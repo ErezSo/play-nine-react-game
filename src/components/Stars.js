@@ -1,3 +1,6 @@
+import React from 'react';
+import range from 'lodash.range';
+
 const Stars = (props) => {
 	return (
   	<div className="col-5">
