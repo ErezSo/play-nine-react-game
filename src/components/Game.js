@@ -1,102 +1,9 @@
-import React from 'react';
-import range from 'lodash.range';
-import './App.css';
+import Stars from 'Stars';
+import DoneFrame from 'DoneFrame';
+import Button from 'Button';
+import Numbers from 'Numbers';
+import Answer from 'Answer';
 
-const Stars = (props) => {
-	return (
-  	<div className="col-5">
-      {range(props.numberOfStars).map(i => 
-      	<i key={i} className="fa fa-star"></i>
-      )}
-    </div>
-  )
-}
-
-const Button = (props) => {
-	let button;
-
-  // Switch between default, right and wrong states of the button
-  switch(props.answerIsCorrect) {
-  	case true:
-      button = 
-        <button className="btn btn-success" onClick={props.acceptAnswer}>
-          <i className="fa fa-check"></i>
-        </button>
-    	break;
-  	case false:
-      button = 
-        <button className="btn btn-danger">
-          <i className="fa fa-times"></i>
-        </button>
-    	break;
-  	default:
-      button = 
-        <button className="btn"
-                onClick={props.checkAnswer}
-                disabled={props.selectedNumbers.length === 0}>
-          =
-        </button>
-    	break;
-  }
-
-	return (
-  	<div className="col-2 text-center">
-      {button}
-      <br/><br/>
-      <button className="btn btn-warning btn-sm" onClick={props.redraw}
-              disabled={props.redraws === 0}>
-        <i className="fa fa-refresh"></i> {props.redraws}
-      </button>
-    </div>
-  )
-}
-
-const Answer = (props) => {
-	return (
-  	<div className="col-5">
-      {props.selectedNumbers.map((num, i) => 
-        <span key={i}
-              onClick={() => props.rollbackNumber(num)}>
-          {num}
-        </span>
-      )}
-    </div>
-  )
-}
-
-const DoneFrame = (props) => {
-	return (
-  	<div className="text-center">
-      <h2>{props.doneStatus}</h2>
-            <button className="btn btn-secondary" onClick={props.resetGame}>
-        Play Again
-      </button>
-    </div>
-  )
-}
-
-const Numbers = (props) => { 
-	const numberClassName = (number) => {
-  	if (props.usedNumbers.includes(number)) 		{ return 'used' }
-  	if (props.selectedNumbers.includes(number)) { return 'selected' }
-  }
-  return (
-    <div className="card text-center">
-      <div>
-        {Numbers.list.map((num, i) => 
-      		<span key={i} className={numberClassName(num)}
-                onClick={() => props.selectNumber(num)}>
-            {num}
-          </span>
-        )}
-      </div>
-    </div>
-  );
-};
-
-// Generate and store an array into the Numbers function object, 
-// so it won't be generated every time the function is refreshed
-Numbers.list = range(1, 10);
 
 class Game extends React.Component {
 	static randomNumber = () => 1 + Math.floor(Math.random()*9);
@@ -211,16 +118,6 @@ class Game extends React.Component {
   }
 }
 
-class App extends React.Component {
-	render() {
-  	return (
-    	<div>
-        <Game />
-      </div>
-    )
-  }
-}
-
 // Algorithm to determine the possible combinations left that match the number of stars.
 // Taken from: bit.ly/s-pcs
 const possibleCombinationSum = (arr, n) => {
@@ -241,4 +138,4 @@ const possibleCombinationSum = (arr, n) => {
   return false;
 };
 
-export default App;
+export default Game;
